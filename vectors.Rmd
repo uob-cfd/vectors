@@ -1,0 +1,540 @@
+---
+title: "Vectors"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This notebook is to give you practice with numbers and sequences of numbers in R.
+
+In what follows, you will some chunks that have `...` in them.  These are blanks for you to fill in.
+
+## Numbers and vectors
+
+The term *vector* sounds rather technical, but in R, it just means a sequence
+of things.
+
+In fact, you've already seen many of these sequences --- or *vectors*.  As you will see soon, a column of numbers from a data frame is an example of a vector.
+
+Here is number, stored in the *variable* `a`:
+
+```{r}
+# Variable "a" gets the value 10.
+a <- 10
+```
+
+As you now know, this is how you *display* something in R; you type the thing you want to display on a line on its own:
+
+```{r}
+# Show what's in "a"
+a
+```
+
+We can put both code lines in the same chunk:
+
+```{r}
+a <- 10
+a
+```
+
+In the next chunk, fill in the code to show what type (`class`) of thing is
+this.   You can use the `class` function for this.
+
+```{r}
+...
+```
+
+## Combining things with `c`
+
+We can also have a variable with a value that is two numbers.
+
+To make one of these, we can use a function --- `c` --- like this:
+
+```{r}
+x <- c(3, 1)
+x
+```
+
+`c` stands for "combine".  `c(3, 1)` combines the numbers 3 and 1 to make
+a sequence of numbers --- or a *vector* of numbers --- with two elements.
+
+A vector has a length.  We can get this with the `length` function.
+
+```{r}
+length(x)
+```
+
+Show the type (class) of the new `x` vector:
+
+```{r}
+...
+```
+
+A vector can be as long as we like:
+
+```{r}
+y <- c(3, 1, 4, 1, 5, 9, 2, 6)
+y
+length(y)
+```
+
+For example, we might be interested in the change in [estimated average daily
+high temperatures](http://berkeleyearth.lbl.gov/regions/global-land) over all
+land on Earth (in degrees Celsius) for the decades surrounding 1850, 1900,
+1950, and 2000.
+
+From the link above, these values are:
+
+* Decade surrounding 1850: 13.6
+* Decade surrounding 1900: 14.39
+* Decade surrounding 1950: 14.59
+* Decade surrounding 2000: 15.16
+
+Use the `c` function to make a new vector `mid_years` that contains these four
+years, that are the centers of the decades.  For example, the first value in
+`mid_years` should be 1850:
+
+```{r}
+mid_years <- c(...)
+# Show the values
+mid_years
+```
+
+Use the `c` function to make a new vector `high_temp` that contains these four corresponding temperature values.
+
+```{r}
+high_temps <- ...
+# Show the values
+high_temps
+```
+
+Use the `plot` function to plot `mid_years` on the x axis and `high_temp` on the y axis:
+
+```{r}
+plot(...)
+```
+
+## Creating vectors
+
+Thus far, in the notebook, you made vectors with the `c` function (for
+"combine").  There are many other ways of making vectors.
+
+We can make vectors of zeros like this:
+
+```{r}
+z <- numeric(10)
+z
+length(z)
+```
+
+You can make sequence of values with the colon operator `:` between numbers.
+
+```{r}
+my_sequence <- 1:10
+my_sequence
+```
+
+The value before the colon is the *from* value; it is the starting value of the
+sequence.
+
+The value after the colon is the *to* value; it is the end value of the
+sequence.
+
+```{r}
+another_sequence <- 3:8
+another_sequence
+```
+
+
+What type (`class`) of thing is this sequence of values?
+
+```{r}
+#- Show the type (class) of "another_sequence"
+...
+```
+
+You should have found that `another_sequence` is of `integer` type.  This means
+that the vector `another_sequence` contains *integers* --- these are *counting*
+or *whole* numbers.  1, 5, -3, 0 are examples of integers, but 0.1 and 5.3 are
+not - because they have a decimal point, meaning, they are or can be not whole
+numbers.
+
+Make a sequence of values from 1 through 4, call it `x_values`.  Use this
+vector instead of `mid_years` to give a plot of `x_values` (on the x axis)
+against `high_temps`:
+
+```{r}
+x_values <- ...
+plot(...)
+```
+
+The *from* and *to* values can be variables:
+
+```{r}
+s <- 2  # Set 's' to have the value 2
+n <- 7  # Set 'n' to have the value 7
+third_sequence <- s:n
+third_sequence
+```
+
+## A column from a data frame is a vector.
+
+Here we load a dataset that has data about AirBnB rooms and houses to rent in
+Amsterdam in 2016:
+
+```{r}
+# Load the data from a URL
+airbnb <- read.csv('amsterdam_airbnb.csv')
+# Show the first six rows.
+head(airbnb)
+```
+
+
+We might be interested in the prices.  If you scroll across the output of
+`head` above, you will see there is a column in this data frame called `price`.
+
+As you remember, to get a column from a data frame, we use the name we gave to
+the data frame (here `airbnb`) followed by a dollar sign (`$`) followed by the
+name of the column (here `price`).
+
+Make a new variable `price_values` that has the values from the `price` column of `airbnb`:
+
+```{r}
+price_values <- ...$...
+# What type (class) of thing is this sequence of values?
+class(price_values)
+```
+
+The chunk above should show you that the values from a column came back to us
+from R as our familiar "integer" vector - the price in whole Euros per day.
+
+## Head and tail
+
+You have used `head` to show the first few rows of a data frame.
+
+Now try `head` on the sequence (vector) `price_values`:
+
+```{r}
+head(...)
+```
+
+This should have shown you the first six values in `price_values`.  We can also pass a second *argument* to `head` to say how many values we want to see.  For example, let's say we wanted to see the first 10 values of the `property_type` column, we might do this:
+
+```{r}
+property_type_values <- airbnb$property_type
+head(property_type_values, 10)
+```
+
+The function `tail` is like `head`, but shows us the last values.  For example,
+here is how we might show the last 4 values in `property_type_values`:
+
+```{r}
+tail(property_type_values, 4)
+```
+
+Show the last 20 values in `price_values`:
+
+```{r}
+...
+```
+
+To recap, `head` shows the first six elements of whatever you pass it.  In our
+case we passed it a column's worth of values.
+
+If we pass `head` a second argument, it is the number of values to select.  If
+the second argument is 10, we see the first 10 values.
+
+`tail` shows the last six values, by default.  The second argument gives the
+number of values to select.  If the second argument is 10, we see the last 10
+values.
+
+## Getting and setting individual elements with indexing
+
+Maybe we want to see the just the third value in a sequence.  I can do this
+with *indexing*.  I put the *index* of the value I want inside square brackets
+- like this:
+
+```{r}
+# The third value
+price_values[3]
+```
+
+Read this as "The value at position (index) 3 of 'prices_values'".
+
+Maybe I want to see the first value:
+
+```{r}
+# The first value
+price_values[1]
+```
+
+This is "The value at position (index) 1 of 'prices_values'".
+
+We can use the same idea to set individual elements:
+
+```{r}
+x <- c(3, 1, 4, 1)
+x
+```
+
+```{r}
+x[2] <- 9
+x
+```
+
+Read this as "Set the value at position (index) 2 of 'x' to be 9".
+
+Let's return to the Earth surface temperature values.  Here are links to the
+
+* [high](http://berkeleyearth.lbl.gov/auto/Regional/TMAX/Text/global-land-TMAX-Trend.txt)
+  and
+* [low](http://berkeleyearth.lbl.gov/auto/Regional/TMIN/Text/global-land-TMIN-Trend.txt)
+
+temperatures.  Again we will be looking at the temperatures in the decades
+surrounding 1850, 1900, 1950 and 2000.  These are the average low temperatures
+for those decades:
+
+```{r}
+low_temps <- c(2.13, 3.38, 2.87, 3.15)
+```
+
+Use indexing to show the second value:
+
+```{r}
+low_temps...
+```
+
+Oops - no - I typed in the wrong values.  The second value should be 2.37 and
+the fourth value should be 3.73.
+
+Use indexing to set the correct values in `low_temps`, then show the whole vector to confirm that you set the values correctly:
+
+```{r}
+# Show the result
+low_temps
+```
+
+## Arithmetic on vectors
+
+You know what will happen here:
+
+```{r}
+a <- 1
+b <- a + 2
+b
+```
+
+What do you think will happen here?
+
+```{r}
+x <- c(3, 1, 4, 1)
+x + 100
+```
+
+Here we add a single number or *scalar*, to a vector.  The rule is, that we add this number to every element in the vector.
+
+The same rule applies to multiplying and dividing and so on.
+
+```{r}
+x * 2
+```
+
+Imagine that we have some friends from the US of A, who find it difficult to read temperatures in Celsius.  The formula to convert Celsius to Fahrenheit is to multiply the Celsius value by (9 / 5) then add 32.
+
+Make a new vector `low_temps_f` that has the Fahrenheit values equivalent to the Celsius values in `low_temps`:
+
+```{r}
+low_temps_f <- ...
+# Show the values
+low_temps_f
+```
+
+You might want to check the calculation of the first value by hand, to make sure
+it's correct.
+
+A similar rule applies when we add, multiply etc two vectors.  The result is a
+vector that is the same length as the vectors we added / multiplied, but the
+first element in the result is the result of adding the first elements of the two vectors we are adding, the second element is the addition of the second elements in the two vectors, and so on.
+
+This is called *elementwise* addition / multiplication.
+
+```{r}
+x <- c(3, 1, 4, 1)
+y <- c(-1, 1, -1, 1)
+x + y
+```
+
+Things work the same way when subtracting, dividing and so on.
+
+For example, let's say we are interested in the *range* of temperatures across the Earth's surface - that is - the difference between the average high and the average low values, for each decade of interest.
+
+You have the high values in `high_temps` and the low values in `low_temps`.  How calculate and show the `range_temps` vector, that has the high value for each of the four decades, minus the matching low value for the decade.
+
+```{r}
+range_temps <- ...
+# Show the result
+range_temps
+```
+
+## Comparison and boolean values
+
+What do you think we will get here?  Run the chunk to see.
+
+```{r}
+a <- 4
+a < 3
+```
+
+We asked a question here, with the `<` *comparison* operator.  The answer can
+either be `TRUE` or `FALSE`.
+
+These are Boolean values, named for the mathematician George Boole, who studied
+the mathematics of True and False values.
+
+What kind of thing is the result?  Use `class` to see:
+
+```{r}
+my_value <- a < 3
+# What type is the result?
+...
+```
+
+You should find that the result is class `logical`.
+
+Consider what would happen if we did same comparison on a sequence of values.  What will R give us?
+
+```{r}
+x <- c(3, 1, 4, 1, 5)
+x < 3
+```
+
+The comparison on a vector, gave a *Boolean vector*.  This is a vector of
+`TRUE` and `FALSE` values.   The original vector `x` had five values, and the result has five values.  Each value is the answer to the `< 3` question for the element at that position.  For example, the first element of the result is the answer to 3 < 3, the second is the answer to 1 < 3, and so on.
+
+These Boolean vectors are also of class `logical`:
+
+```{r}
+my_value2 = a < 3
+class(my_value2)
+```
+
+We have already used these to select rows from data frames:
+
+```{r}
+realistic_airbnb <- subset(airbnb, airbnb$price < 2000)
+head(realistic_airbnb)
+```
+
+The first line in the chunk above makes a *subset* of the `airbnb` data frame.
+Specifically, it takes a subset that consists only of the rows where the
+`price` column value is less than 2000.  As we will soon see, we specify which
+rows we want with a *Boolean vector*.
+
+Let's go over the logic of `subset`.
+
+`subset` is a function.   It takes two arguments (the things between the
+brackets).
+
+The first thing between the brackets is the thing you want to take a subset
+*from*.  In our case, we want to take a subset from the `airbnb` data frame.
+
+The second thing between the brackets is something identifying the particular
+things you want.  In our case this `airbnb$price < 2000`.
+
+So, when we do this:
+
+```{r}
+realistic_airbnb <- subset(airbnb, airbnb$price < 2000)
+```
+
+— we are calling the `subset` function where we want to:
+
+* Take a subset from the `airbnb` data frame (first argument)
+* We want only the rows where the `airbnb$price` column has a value less than
+  2000 (second argument).
+
+In fact, the second argument is a Boolean vector:
+
+```{r}
+ok_prices <- airbnb$price < 2000
+head(ok_prices)
+```
+
+When we use it with `subset`, it selects the rows where there is a `TRUE` value in the corresponding position in boolean vector, and drops the rows where there is a corresponding `FALSE`.
+
+For example, consider this chunk, that does the same job as the one above.
+
+```{r}
+realistic_airbnb <- subset(airbnb, ok_prices)
+```
+
+If `ok_prices[1] == TRUE`, then we keep the first row of `airbnb`, otherwise we drop it.
+
+If `ok_prices[2] == TRUE`, then we keep the second row of `airbnb`, otherwise we drop it.
+
+And so on.
+
+Make a Boolean vector `lt_100` that has the result of asking whether
+`price_values` is less than 100.  Show the first 10 values:
+
+```{r}
+lt_100 <- ...
+#- Show the first 10 values of lt_100
+...
+```
+
+Use `lt_100` to select the rows in `airbnb` where the price was less than 100
+Euros.  Put the result in to `cheap_airbnb`
+
+```{r}
+cheap_airbnb <- ...
+# Show the first few rows
+head(cheap_airbnb)
+```
+
+We sometimes want to combine tests into one.  For example, we might want to one test:
+
+* Is the price less than 100?
+
+and then another test:
+
+* Is the price greater than 50?
+
+Then we might like to combine the answers from these tests to find where:
+
+* The price is less than 100 AND the price is greater than 50.
+
+We can do that operation with the AND operator in R - `&`.  Here it is in operation with a couple of vectors:
+
+```{r}
+first <- c(TRUE, TRUE, FALSE, FALSE)
+second <- c(TRUE, FALSE, TRUE, FALSE)
+first & second
+```
+
+Notice that the result is only TRUE if the corresponding value in `first` AND the corresponding value in `second` are TRUE.  If either are FALSE, then `&` returns FALSE.
+
+Make a vector `gt_50` that is TRUE for rows with prices greater than 50 and FALSE otherwise.
+
+```{r}
+gt_50 <- ...
+#- Show the first 10 values of gt_50
+...
+```
+
+Use `&` to combine `lt_100` and `gt_50` to make a Boolean vector which has TRUE where both of `lt_100` and `gt_50` are TRUE, and FALSE otherwise:
+
+```{r}
+is_middling <- ...
+# Show the first 10 values of is_middling
+head(is_middling)
+```
+
+Use `is_middling` to select the rows in `airbnb` where the price was less than
+100 Euros but greater than 50 Euros.  Put the result in to `okish_airbnb`
+
+```{r}
+okish_airbnb <- ...
+# Show the first few rows
+head(okish_airbnb)
+```
